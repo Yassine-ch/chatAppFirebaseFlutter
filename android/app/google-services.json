@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "49590326862",
+    "project_id": "chapapp-e3b26",
+    "storage_bucket": "chapapp-e3b26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49590326862:android:6746f2e346b2f99171551f",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49590326862-390c5p319ldb2d1i6j60bpcat5viugfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Gf8bT7ajMb3Xq1Vj2udj-X5cKVfXm0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49590326862-390c5p319ldb2d1i6j60bpcat5viugfr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
