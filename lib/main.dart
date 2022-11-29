@@ -1,4 +1,5 @@
 import 'package:chatapp/firebase_options.dart';
+import 'package:chatapp/screens/chat_screen.dart';
 import 'package:chatapp/screens/login_screen.dart';
 import 'package:chatapp/screens/register_screnn.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,12 +23,15 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        'loginScreen':(context)=>LoginScreen(),
+        LoginScreen.id:(context)=>LoginScreen(),
         RegisterScreen.id:(context)=>RegisterScreen(),
+        ChatScreen.id:(context)=>ChatScreen(),
+
+
       },
 
 
-      initialRoute: 'loginScreen',
+      initialRoute: LoginScreen.id,
     );
   }
 }

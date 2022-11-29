@@ -1,5 +1,6 @@
 import 'package:chatapp/constants.dart';
 import 'package:chatapp/help/show_snack_bar.dart';
+import 'package:chatapp/screens/chat_screen.dart';
 import 'package:chatapp/screens/register_screnn.dart';
 import 'package:chatapp/widgets/custom_button.dart';
 import 'package:chatapp/widgets/custom_text_field.dart';
@@ -11,7 +12,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginScreen extends StatefulWidget {
  LoginScreen({Key? key}) : super(key: key);
-
+static String id = 'LoginScreen';
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -87,7 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                       try{
                         await loginUser();
-                        showSnackBar(context, 'SUCCESS');
+
+                        Navigator.pushNamed(context, ChatScreen.id);
                         //navigate to LOGIN screen
 
                       }

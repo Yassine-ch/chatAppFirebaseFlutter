@@ -1,5 +1,6 @@
 import 'package:chatapp/constants.dart';
 import 'package:chatapp/help/show_snack_bar.dart';
+import 'package:chatapp/screens/chat_screen.dart';
 import 'package:chatapp/screens/login_screen.dart';
 import 'package:chatapp/widgets/custom_button.dart';
 import 'package:chatapp/widgets/custom_text_field.dart';
@@ -88,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                     try{
                       await registerUser();
-                      showSnackBar(context, 'SUCCESS');
+                      Navigator.pushNamed(context, ChatScreen.id);
                       //navigate to LOGIN screen
 
                     }
