@@ -1,4 +1,5 @@
 import 'package:chatapp/constants.dart';
+import 'package:chatapp/help/show_snack_bar.dart';
 import 'package:chatapp/screens/login_screen.dart';
 import 'package:chatapp/widgets/custom_button.dart';
 import 'package:chatapp/widgets/custom_text_field.dart';
@@ -7,17 +8,27 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
    RegisterScreen({Key? key}) : super(key: key);
    static String id ='register';
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
    String? email;
+
    String? password;
+
+   bool isLoading = false;
+
    GlobalKey<FormState> formkey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
-      inAsyncCall: true,
+      inAsyncCall: isLoading,
       child: Scaffold(
           backgroundColor: KPrimaryColor,
           body: Padding(
@@ -52,7 +63,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
 
-                  CustomTextField(
+                  CustomFormTextField(
                     onChanged: (data)
                     {
                       email= data;
@@ -60,7 +71,7 @@ class RegisterScreen extends StatelessWidget {
                     hintText: 'enter your email',
                   ),
                   const SizedBox(height: 10,),
-                  CustomTextField(
+                  CustomFormTextField(
                     onChanged: (data){
                       password=data;
                     },
@@ -71,8 +82,15 @@ class RegisterScreen extends StatelessWidget {
                     onTap: ()async
                     {
                   if(formkey.currentState!.validate()){
+                    isLoading= true;
+                    setState(() {
+
+                    });
                     try{
                       await registerUser();
+                      showSnackBar(context, 'SUCCESS');
+                      //navigate to LOGIN screen
+
                     }
                     on FirebaseAuthException catch (e) {
                       if (e.code == 'weak-password') {
@@ -84,7 +102,10 @@ class RegisterScreen extends StatelessWidget {
                     catch (e){
                       showSnackBar(context, 'there was an error ');
                     }
-                    showSnackBar(context, 'SUCCESS');
+                    isLoading=false;
+                    setState(() {
+
+                    });
                   }
                   else {
 
@@ -125,10 +146,6 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  void showSnackBar(BuildContext context,String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),
-    ),);
-  }
 
   Future<void> registerUser() async {
      var auth = FirebaseAuth.instance;

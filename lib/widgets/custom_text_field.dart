@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
-   CustomTextField({this.onChanged,this.hintText});
+class CustomFormTextField extends StatelessWidget {
+   CustomFormTextField({this.onChanged,this.hintText});
   String? hintText;
 Function (String)? onChanged;
   @override
