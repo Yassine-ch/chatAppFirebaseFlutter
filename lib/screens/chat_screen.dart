@@ -2,16 +2,13 @@ import 'package:chatapp/constants.dart';
 import 'package:chatapp/widgets/chat_buble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class ChatScreen extends StatefulWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+class ChatScreen extends StatelessWidget {
 
  static String id ='ChatScreen';
+//call collection
+ CollectionReference messages = FirebaseFirestore.instance.collection('messages');
 
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +39,11 @@ class _ChatScreenState extends State<ChatScreen> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
+              onSubmitted:(data) {
+                messages.add({
+                  'msg' :data,
+                });
+              },
               decoration: InputDecoration(
                 hintText: 'send Message',
                 suffixIcon: Icon(
