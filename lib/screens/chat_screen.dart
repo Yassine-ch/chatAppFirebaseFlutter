@@ -8,6 +8,7 @@ class ChatScreen extends StatelessWidget {
  static String id ='ChatScreen';
 //call collection
  CollectionReference messages = FirebaseFirestore.instance.collection('messages');
+ TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +40,12 @@ class ChatScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
+              controller: controller,
               onSubmitted:(data) {
                 messages.add({
                   'msg' :data,
                 });
+                controller.clear();
               },
               decoration: InputDecoration(
                 hintText: 'send Message',
