@@ -1,4 +1,5 @@
 import 'package:chatapp/constants.dart';
+import 'package:chatapp/models/message.dart';
 import 'package:chatapp/widgets/chat_buble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,16 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: messages.get(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: messages.snapshots(),
       builder: (context, snapshot) {
 
 
         if (snapshot.hasData) {
-          print(snapshot.data!.docs[0]['msg']);
+        List<Message> messagesList=[];
+        for(int i =0;i<snapshot.data!.docs.length;i++){
+          messagesList.add(Message.fromJson(snapshot.data!.docs[i]));
+        }
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -40,8 +44,10 @@ class ChatScreen extends StatelessWidget {
             body: Column(
               children: [
                 Expanded(
-                  child: ListView.builder(itemBuilder: (context, index) {
-                    return ChatBuble();
+                  child: ListView.builder(
+                      itemCount: messagesList.length,
+                      itemBuilder: (context, index) {
+                    return ChatBuble(msg:messagesList[index],);
                   }),
                 ),
                 Padding(
@@ -71,7 +77,9 @@ class ChatScreen extends StatelessWidget {
             ),
           );
         } else {
-          return Text('LOADING ...');
+          return Scaffold(
+              body: Text('Loading please wait...'),
+          );
         }
       },
     );
