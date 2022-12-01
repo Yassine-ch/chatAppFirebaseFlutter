@@ -7,64 +7,70 @@ class ChatScreen extends StatelessWidget {
 
  static String id ='ChatScreen';
 //call collection
- CollectionReference messages = FirebaseFirestore.instance.collection('messages');
+ CollectionReference messages = FirebaseFirestore.instance.collection(KMessgesCollections);
  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return FutureBuilder<DocumentSnapshot>(
+      future: messages.doc('2BCHxeSGbf0rvozCxzLY').get(),
+      builder: (context, snapshot){
+        print(snapshot.data!['msg']);
+        return Scaffold(
+          appBar: AppBar(
 
-        automaticallyImplyLeading: false,
-        backgroundColor: Color(0xffC0B3FF),
-       title: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Image.asset(keyLog,
-           height: 50,
-           ),
-           Text('CHAT'),
-         ],
-       ),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(itemBuilder: (context,index)
-            {
-              return ChatBuble();
-            }
+            automaticallyImplyLeading: false,
+            backgroundColor: Color(0xffC0B3FF),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(keyLog,
+                  height: 50,
+                ),
+                Text('CHAT'),
+              ],
             ),
+            centerTitle: true,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              controller: controller,
-              onSubmitted:(data) {
-                messages.add({
-                  'msg' :data,
-                });
-                controller.clear();
-              },
-              decoration: InputDecoration(
-                hintText: 'send Message',
-                suffixIcon: Icon(
-                  Icons.send,
-                  color:Color(0xffAC29F5) ,
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(itemBuilder: (context,index)
+                {
+                  return ChatBuble();
+                }
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16)
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                )
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: controller,
+                  onSubmitted:(data) {
+                    messages.add({
+                      'msg' :data,
+                    });
+                    controller.clear();
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'send Message',
+                      suffixIcon: Icon(
+                        Icons.send,
+                        color:Color(0xffAC29F5) ,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      )
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
 
+        );
+      },
     );
   }
 }
