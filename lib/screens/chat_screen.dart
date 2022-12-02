@@ -16,7 +16,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.snapshots(),
+      stream: messages.orderBy(KCreatedAt).snapshots(),
       builder: (context, snapshot) {
 
 
@@ -56,7 +56,8 @@ class ChatScreen extends StatelessWidget {
                     controller: controller,
                     onSubmitted: (data) {
                       messages.add({
-                        'msg': data,
+                        KMessage: data,
+                        KCreatedAt:  DateTime.now(),
                       });
                       controller.clear();
                     },
