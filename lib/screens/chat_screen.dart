@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatelessWidget {
   static String id = 'ChatScreen';
+  final _controller = ScrollController();
 
 //call collection
   CollectionReference messages =
@@ -15,8 +16,9 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   var email = ModalRoute.of(context)!.settings.arguments ;
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.orderBy(KCreatedAt).snapshots(),
+      stream: messages.orderBy(KCreatedAt,descending: true).snapshots(),
       builder: (context, snapshot) {
 
 
@@ -45,9 +47,15 @@ class ChatScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    reverse: true,
+                    controller: _controller,
                       itemCount: messagesList.length,
                       itemBuilder: (context, index) {
-                    return ChatBuble(msg:messagesList[index],);
+                    return
+                      messagesList[index].id == email ?
+                      ChatBuble(
+
+                      msg:messagesList[index],):ChatBubleForFriend(msg: messagesList[index]);
                   }),
                 ),
                 Padding(
@@ -58,8 +66,14 @@ class ChatScreen extends StatelessWidget {
                       messages.add({
                         KMessage: data,
                         KCreatedAt:  DateTime.now(),
+                        'id':email
                       });
                       controller.clear();
+                      _controller.animateTo(
+                      0,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.fastOutSlowIn,
+                      );
                     },
                     decoration: InputDecoration(
                         hintText: 'send Message',

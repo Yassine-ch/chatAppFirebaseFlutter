@@ -72,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                ),
                 const SizedBox(height: 10,),
                 CustomFormTextField(
+                  obscureText: true,
                   onChanged: (data){
                     password=data;
                   },
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       try{
                         await loginUser();
 
-                        Navigator.pushNamed(context, ChatScreen.id);
+                        Navigator.pushNamed(context, ChatScreen.id,arguments: email);
                         //navigate to LOGIN screen
 
                       }

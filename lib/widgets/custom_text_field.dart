@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomFormTextField extends StatelessWidget {
-   CustomFormTextField({this.onChanged,this.hintText});
+   CustomFormTextField({this.onChanged,this.hintText,this.obscureText=false});
   String? hintText;
+  bool? obscureText;
 Function (String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return  TextFormField(
+      obscureText: obscureText!,
       validator: (data){
         if (data!.isEmpty){
           return 'field is required';
